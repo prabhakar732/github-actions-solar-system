@@ -32,24 +32,3 @@ jobs:
           with:
             name: Mocha-Test-Result
             path: test-results.xml
-    dev-deploy:
-        needs: docker
-        name: dev-deploy
-        environment: 
-          name: development
-        runs-on: ubuntu-latest                  
-        steps:
-        - name: checkout the repository
-          uses: action/chevkout@v4
-        - name: setup-kubectl
-          uses: azure/setup-kubectl@v4
-          with:
-            version: 'v1.26.0' # default is latest stable
-          id: install
-        - name: k8s-set-context
-          uses: azure/k8s-set-context@v4
-          with:
-            method: kubeconfig
-            kubeconfig: ${{secrets.KUBECONFIG}}
-        - run: kubectl version --short -o yaml
-    
